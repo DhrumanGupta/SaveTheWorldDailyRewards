@@ -4,11 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Numerics;
-using System.Text;
 using System.Threading.Tasks;
-using HtmlAgilityPack;
 using Newtonsoft.Json;
 
 namespace SaveTheWorldRewards
@@ -118,7 +114,7 @@ namespace SaveTheWorldRewards
                         file.WriteLine(utcToday);
                     }
 
-                    Environment.Exit(1);
+                    Console.ReadKey();
                 }
             }
 		}

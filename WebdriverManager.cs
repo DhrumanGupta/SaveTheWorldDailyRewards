@@ -4,6 +4,7 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace SaveTheWorldRewards
 {
@@ -45,6 +46,18 @@ namespace SaveTheWorldRewards
 
             string text = new WebDriverWait(driver, TimeSpan.FromSeconds(30)).Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("/html/body/pre"))).Text;
             driver.Close();
+            driver.Quit();
+
+            driver.Dispose();
+            driver = null;
+
+            Process[] killChrome = Process.GetProcessesByName("chromedriver.exe");
+
+            foreach (var process in killChrome)
+            {
+                process.Kill();
+            }
+
             Console.WriteLine("driver closed");
 
             var codeDict = JsonConvert.DeserializeObject<Dictionary<string, string>>(text);
