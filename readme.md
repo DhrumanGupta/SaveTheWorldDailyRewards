@@ -4,7 +4,7 @@ Either compile from the source code, or download the zip file from the releases 
 Log into chrome with your epic games account, and thats it. Just make sure that you are logged into epic games on chrome. <br />
 Run the exe, it will automatically get the data and run the api in headless mode.
 
-This may seem obvious, but: YOU NEED TO HAVE THE GAME INSTALLED!
+This may seem obvious, but: YOU NEED TO BUY THE GAME!
 
 # Requirments
 Python 3, should be in "C:\Program Files\Python\python.exe". <br />
