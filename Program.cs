@@ -113,7 +113,7 @@ namespace SaveTheWorldRewards
                     Console.WriteLine();
                     Console.WriteLine("Saving current date as " + utcToday);
 
-                    using (StreamWriter file = new System.IO.StreamWriter(path))
+                    using (StreamWriter file = new StreamWriter(path))
                     {
                         file.WriteLine(utcToday);
                     }
