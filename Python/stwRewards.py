@@ -67,4 +67,4 @@ if str(r.text).find('{"errorCode":"') != '-1':
             print('using backup')
                 
     except:
-        print("shit!")
+        print("Reward already claimed!")
