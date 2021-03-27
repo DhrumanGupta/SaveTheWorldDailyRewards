@@ -17,3 +17,6 @@ Go to https://chromedriver.chromium.org/, and download version that your broswer
 This most likely happens because of an outdated webdriver. <br />
 Go to https://chromedriver.chromium.org/, and download version that your broswer is currently on (can check on chrome://version/). <br />
 Download the corresponding variable from here, then make sure to update your chromedriver in your PATH variable.
+
+# Something to keep in your mind
+The code is total spaghetti. I did this just as a side thing to get my rewards claimed automatically, but then thought I should share it here. 
