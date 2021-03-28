@@ -10,10 +10,14 @@ This may seem obvious, but: YOU NEED TO BUY THE GAME!
 Python 3, should be in "C:\Program Files\Python\python.exe". <br />
 Make sure that you are logged into epic games on chrome.
 
-Add chromedriver into your PATH variables. Make sure it is the right version of chromedriver. <br />
-Go to https://chromedriver.chromium.org/, and download version that your broswer is currently on (can check on chrome://version/).
+Add chromedriver into your PATH variables. Make sure it is the right version of chromedriver.<br />
+You can learn how to add to PATH here: https://www.youtube.com/watch?v=dz59GsdvUF8<br>
+MAKE SURE to download the version that your broswer is currently on (check on chrome://version/).
 
 # Not working?
 This most likely happens because of an outdated webdriver. <br />
 Go to https://chromedriver.chromium.org/, and download version that your broswer is currently on (can check on chrome://version/). <br />
 Download the corresponding variable from here, then make sure to update your chromedriver in your PATH variable.
+
+# Something to keep in your mind
+The code is total spaghetti. I did this just as a side thing to get my rewards claimed automatically, but then thought I should share it here. 
