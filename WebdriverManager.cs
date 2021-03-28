@@ -15,7 +15,8 @@ namespace SaveTheWorldRewards
             string link = "https://www.epicgames.com/id/api/redirect?clientId=ec684b8c687f479fadea3cb2ad83f5c6&responseType=code";
 
             var options = new ChromeOptions();
-            options.AddArgument("user-data-dir=C:/Users/dhrum/AppData/Local/Google/Chrome/User Data");
+            Console.WriteLine();
+            options.AddArgument($"user-data-dir={Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/Google/Chrome/User Data");
             options.AddExcludedArgument("enable-automation");
             options.AddAdditionalCapability("useAutomationExtension", false);
 
