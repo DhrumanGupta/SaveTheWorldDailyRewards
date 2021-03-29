@@ -5,6 +5,7 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.Win32;
 using Newtonsoft.Json;
 
 namespace SaveTheWorldRewards
@@ -119,20 +120,21 @@ namespace SaveTheWorldRewards
             }
 		}
 
-		private static async Task RunPython(string url, string authCode)
+        private static async Task RunPython(string url, string authCode)
         {
             // 1) Create Process Info
             var psi = new ProcessStartInfo
             {
-                FileName = @"C:\Program Files\Python\python.exe"
+                FileName = "cmd.exe"
             };
 
             // 2) Provide script and arguments
-            var script = @"stwRewards.py";
+            var script = "stwRewards.py";
 
-            psi.Arguments = $"\"{script}\" \"{url}\" \"{authCode}\"";
+            psi.Arguments = $"/C python {script} {url} {authCode}";
 
             // 3) Process configuration
+            psi.WindowStyle = ProcessWindowStyle.Hidden;
             psi.UseShellExecute = false;
             psi.CreateNoWindow = true;
             psi.RedirectStandardOutput = true;

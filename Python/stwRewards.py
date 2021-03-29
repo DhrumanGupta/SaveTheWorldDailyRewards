@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Dec 10 09:53:45 2020
-
-@author: dhrum
-"""
-
 import requests
 import sys
 import items

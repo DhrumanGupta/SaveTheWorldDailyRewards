@@ -6,21 +6,21 @@ namespace SaveTheWorldRewards
 {
     class Response
     {
-        public string access_token;
-        public int expires_in;
-        public string expires_at;
-        public string token_type;
-        public string refresh_token;
-        public int refresh_expires;
-        public string refresh_expires_at;
-        public string account_id;
-        public string client_id;
-        public bool internal_client;
-        public string client_service;
-        public string[] scope;
-        public string displayName;
-        public string app;
-        public string in_app_id;
-        public string device_id;
+        public string access_token { get; set; }
+        public int expires_in { get; set; }
+        public string expires_at { get; set; }
+        public string token_type { get; set; }
+        public string refresh_token { get; set; }
+        public int refresh_expires { get; set; }
+        public string refresh_expires_at { get; set; }
+        public string account_id { get; set; }
+        public string client_id { get; set; }
+        public bool internal_client { get; set; }
+        public string client_service { get; set; }
+        public string[] scope { get; set; }
+        public string displayName { get; set; }
+        public string app { get; set; }
+        public string in_app_id { get; set; }
+        public string device_id { get; set; }
     }
 }
