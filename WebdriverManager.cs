@@ -18,7 +18,7 @@ namespace SaveTheWorldRewards
             var options = new ChromeOptions();
             Console.WriteLine();
 
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
                 options.AddArgument($"user-data-dir={Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/Google/Chrome/User Data");
             } else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
