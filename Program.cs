@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace SaveTheWorldRewards
 {
@@ -92,6 +93,7 @@ namespace SaveTheWorldRewards
 			if (token?.Length != 32)
             {
 				Console.WriteLine("Please provide a valid token!");
+                Console.WriteLine(token?.Length);
             }
 			else
             {
@@ -131,16 +133,17 @@ namespace SaveTheWorldRewards
                 Environment.Exit(59); //An unexpected network error occurred.
             }
             string s = postR.Result.Content.ReadAsStringAsync().Result;
-            var response = JsonConvert.DeserializeObject<Dictionary<string, string>>(s);
-            var notifications = JsonConvert.DeserializeObject<Dictionary<string, string>>(response["notifications"]);
-            var day = notifications["daysLoggedIn"];
-            var reward = Items.items[notifications["daysLoggedIn"]];
-            var items = JsonConvert.DeserializeObject<List<String>>(notifications["items"]);
+            using JsonDocument responsetemp = JsonDocument.Parse(s);
+            JsonElement response = responsetemp.RootElement;
+            var notifications = response.GetProperty("notifications")[0];
+            var day = notifications.GetProperty("daysLoggedIn");
+            var reward = Items.items[notifications.GetProperty("daysLoggedIn").ToString()];
+            var items = notifications.GetProperty("items");
             Console.WriteLine("On day " + day + ", you received: " + reward);
-            if (items.Count > 1)
+            if (items.GetArrayLength() > 1)
             {
-                var fndr_amt = JsonConvert.DeserializeObject<Dictionary<string, string>>(items[2])["quantity"];
-                var fndr_item_json = JsonConvert.DeserializeObject<Dictionary<string, string>>(items[2])["itemType"];
+                var fndr_amt = items[1].GetProperty("quantity").ToString();
+                var fndr_item_json = items[1].GetProperty("itemType").ToString();
                 var fndr_item = fndr_item_json;
                 if (fndr_item_json == "CardPack:cardpack_event_founders")
                 {
