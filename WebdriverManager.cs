@@ -70,7 +70,6 @@ namespace SaveTheWorldRewards
                 process.Kill();
             }
 
-            Console.WriteLine("driver closed");
 
             var codeDict = JsonConvert.DeserializeObject<Dictionary<string, string>>(text);
             if (codeDict.ContainsKey("redirectUrl"))

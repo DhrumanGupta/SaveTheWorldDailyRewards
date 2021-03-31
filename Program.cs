@@ -92,8 +92,7 @@ namespace SaveTheWorldRewards
             if (token == null) return;
 			if (token?.Length != 32)
             {
-				Console.WriteLine("Please provide a valid token!");
-                Console.WriteLine(token?.Length);
+				Console.WriteLine("Try logging in again: "+Endpoints.ac);
             }
 			else
             {
