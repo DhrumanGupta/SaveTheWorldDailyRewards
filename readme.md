@@ -9,15 +9,11 @@ You will be presented with a lot of options. Download a version according to you
 * Linux 64-bit
 * Linux arm
 
----
-
 # How to use
 Log into chrome with your epic games account, and thats it. You only need to do this once. <br />
 Run the exe, it will automatically get the data and run the api in headless mode.
 
 This may seem obvious, but: YOU NEED TO BUY THE GAME!
-
----
 
 # Requirments
 ### Chromedriver
@@ -27,8 +23,6 @@ MAKE SURE to download the version that your broswer is currently on (check on ch
 
 ### Other
 Make sure that you are logged into epic games on chrome.
-
----
 
 # Not working?
 This most likely happens because of an outdated webdriver. <br />
