@@ -16,7 +16,8 @@ namespace SaveTheWorldRewards
             string link = "https://www.epicgames.com/id/api/redirect?clientId=ec684b8c687f479fadea3cb2ad83f5c6&responseType=code";
 
             var options = new ChromeOptions();
-            Console.WriteLine();
+            Console.WriteLine("Launching Driver");
+
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
                 options.AddArgument($"user-data-dir={Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/Google/Chrome/User Data");
             }
@@ -28,6 +29,12 @@ namespace SaveTheWorldRewards
             {
                 options.AddArgument($"user-data-dir=~/Library/Application Support/Google/Chrome");
             }
+            else
+            {
+                Console.WriteLine("Unsupported platform!");
+                return string.Empty;
+            }
+
             options.AddExcludedArgument("enable-automation");
             options.AddAdditionalCapability("useAutomationExtension", false);
 
@@ -50,9 +57,10 @@ namespace SaveTheWorldRewards
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                Console.WriteLine("Please close your chrome window.");
                 return string.Empty;
             }
+
+            Console.WriteLine("Created new driver");
 
             driver.Url = link;
 
@@ -62,6 +70,8 @@ namespace SaveTheWorldRewards
 
             driver.Dispose();
             driver = null;
+
+            Console.WriteLine("Closed Driver");
 
             Process[] killChrome = Process.GetProcessesByName("chromedriver.exe");
 
