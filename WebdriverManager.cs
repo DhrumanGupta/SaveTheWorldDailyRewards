@@ -5,6 +5,7 @@ using OpenQA.Selenium;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace SaveTheWorldRewards
 {
@@ -16,7 +17,17 @@ namespace SaveTheWorldRewards
 
             var options = new ChromeOptions();
             Console.WriteLine();
-            options.AddArgument($"user-data-dir={Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/Google/Chrome/User Data");
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
+                options.AddArgument($"user-data-dir={Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/Google/Chrome/User Data");
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                options.AddArgument($"user-data-dir=~/.config/google-chrome");
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                options.AddArgument($"user-data-dir=~/Library/Application Support/Google/Chrome");
+            }
             options.AddExcludedArgument("enable-automation");
             options.AddAdditionalCapability("useAutomationExtension", false);
 
@@ -59,7 +70,6 @@ namespace SaveTheWorldRewards
                 process.Kill();
             }
 
-            Console.WriteLine("driver closed");
 
             var codeDict = JsonConvert.DeserializeObject<Dictionary<string, string>>(text);
             if (codeDict.ContainsKey("redirectUrl"))

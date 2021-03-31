@@ -4,9 +4,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Win32;
 using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace SaveTheWorldRewards
 {
@@ -91,7 +92,7 @@ namespace SaveTheWorldRewards
             if (token == null) return;
 			if (token?.Length != 32)
             {
-				Console.WriteLine("Please provide a valid token!");
+				Console.WriteLine("Try logging in again: "+Endpoints.ac);
             }
 			else
             {
@@ -103,7 +104,7 @@ namespace SaveTheWorldRewards
                 }
 				else
                 {
-                    await RunPython(Endpoints.Reward(s2), s1);
+                    await getResult(Endpoints.Reward(s2), s1);
 
                     string utcToday = (DateTime.UtcNow.DayOfYear == 365 || DateTime.UtcNow.DayOfYear == 366) ? new DateTime(0).ToString() : DateTime.UtcNow.ToString();
 
@@ -114,46 +115,45 @@ namespace SaveTheWorldRewards
                     {
                         file.WriteLine(utcToday);
                     }
-
-                    Console.ReadKey();
                 }
             }
 		}
-
-        private static async Task RunPython(string url, string authCode)
+        public static async Task getResult(string url, string authCode)
         {
-            // 1) Create Process Info
-            var psi = new ProcessStartInfo
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "bearer " + authCode);
+            client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
+            HttpContent content = new StringContent("{}", Encoding.UTF8, "application/json");
+            var postR = client.PostAsync(url, content);
+            while (!postR.IsCompleted) { }
+            if (postR.Result.StatusCode != HttpStatusCode.OK)
             {
-                FileName = "cmd.exe"
-            };
-
-            // 2) Provide script and arguments
-            var script = "stwRewards.py";
-
-            psi.Arguments = $"/C python {script} {url} {authCode}";
-
-            // 3) Process configuration
-            psi.WindowStyle = ProcessWindowStyle.Hidden;
-            psi.UseShellExecute = false;
-            psi.CreateNoWindow = true;
-            psi.RedirectStandardOutput = true;
-            psi.RedirectStandardError = true;
-
-            // 4) Execute process and get output
-            var errors = "";
-            var results = "";
-
-            using (var process = Process.Start(psi))
-            {
-                errors = await process.StandardError.ReadToEndAsync();
-                results = await process.StandardOutput.ReadToEndAsync();
+                Console.WriteLine(postR.Result.Content.ToString());
+                Environment.Exit(59); //An unexpected network error occurred.
             }
-
-            // 5) Display output
-            Console.WriteLine(errors);
-            Console.WriteLine();
-            Console.WriteLine(results);
+            string s = postR.Result.Content.ReadAsStringAsync().Result;
+            using JsonDocument responsetemp = JsonDocument.Parse(s);
+            JsonElement response = responsetemp.RootElement;
+            var notifications = response.GetProperty("notifications")[0];
+            var day = notifications.GetProperty("daysLoggedIn");
+            var reward = Items.items[notifications.GetProperty("daysLoggedIn").ToString()];
+            var items = notifications.GetProperty("items");
+            Console.WriteLine("On day " + day + ", you received: " + reward);
+            if (items.GetArrayLength() > 1)
+            {
+                var fndr_amt = items[1].GetProperty("quantity").ToString();
+                var fndr_item_json = items[1].GetProperty("itemType").ToString();
+                var fndr_item = fndr_item_json;
+                if (fndr_item_json == "CardPack:cardpack_event_founders")
+                {
+                    fndr_item = "Founder's Llama";
+                }
+                else if (fndr_item_json == "CardPack:cardpack_bronze")
+                {
+                    fndr_item = "Upgrade Llama (bronze)";
+                }
+                Console.WriteLine("Founders rewards: " + fndr_amt + " " + fndr_item);
+            }
         }
-	}
+    }
 }
