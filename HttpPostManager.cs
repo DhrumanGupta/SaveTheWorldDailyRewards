@@ -92,9 +92,9 @@ namespace SaveTheWorldRewards
             }
 
             string toShow = $"On day {day}, you received: {reward}";
-
-            var nFounderItem = items[1].GetProperty("quantity").ToString();
-            var founderItemJson = items[1].GetProperty("itemType").ToString();
+ 
+            var nFounderItem = items[0].GetProperty("quantity").ToString();
+            var founderItemJson = items[0].GetProperty("itemType").ToString();
             string founderItem = "";
 
             switch (founderItemJson)
