@@ -1,5 +1,5 @@
 ﻿# How to download
-Either compile from the source code, or download the zip file from the releases section.<br>
+Either compile from the source code, or download the zip file from the [releases section](/releases/latest).  
 You will be presented with a lot of options. Download a version according to your platform.
 ### Supported Platforms
 * Windows 32-bit
