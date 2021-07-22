@@ -1,4 +1,4 @@
-﻿# How to download
+# How to download
 Either compile from the source code, or download the zip file from the [releases section](https://github.com/DhrumanGupta/SaveTheWorldDailyRewards/releases/latest).  
 You will be presented with a lot of options. Download a version according to your platform.
 ### Supported Platforms
