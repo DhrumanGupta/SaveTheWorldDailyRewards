@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace SaveTheWorldRewards
 {
@@ -15,19 +16,19 @@ namespace SaveTheWorldRewards
         {
             if (!HasRunToday())
             {
-                string authCode = WebdriverManager.GetAuthCode();
+                string authCode = await WebdriverManager.GetAuthCode();
                 bool result = await HttpPostManager.Daily(authCode);
 
                 if (result)
                 {
-                    string utcToday = (DateTime.UtcNow.DayOfYear == 365 || DateTime.UtcNow.DayOfYear == 366) ? DateTime.MinValue.ToString() : DateTime.UtcNow.ToString();
+                    string utcToday = (DateTime.UtcNow.DayOfYear == 365 || DateTime.UtcNow.DayOfYear == 366) ? DateTime.MinValue.ToString(CultureInfo.InvariantCulture) : DateTime.UtcNow.ToString(CultureInfo.InvariantCulture);
 
                     Console.WriteLine("Saving current date as " + utcToday);
                     File.WriteAllText(_path, utcToday);
                 }
+                
+                Console.ReadKey();
             }
-
-            Console.ReadKey();
         }
 
         private static bool HasRunToday()
@@ -42,7 +43,7 @@ namespace SaveTheWorldRewards
 
             string s = File.ReadAllText(_path);
             Console.WriteLine($"Last claimed at {s}");
-            var lastUsed = DateTime.Parse(s);
+            var lastUsed = DateTime.Parse(s, CultureInfo.InvariantCulture);
 
 
             if (lastUsed.DayOfYear >= DateTime.UtcNow.DayOfYear)

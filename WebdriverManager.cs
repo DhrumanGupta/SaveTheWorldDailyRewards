@@ -6,12 +6,13 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace SaveTheWorldRewards
 {
     class WebdriverManager
     {
-        public static string GetAuthCode()
+        public static async Task<string> GetAuthCode()
         {
             string link = "https://www.epicgames.com/id/api/redirect?clientId=ec684b8c687f479fadea3cb2ad83f5c6&responseType=code";
 
@@ -41,7 +42,7 @@ namespace SaveTheWorldRewards
             options.AddArgument("disable-software-rasterizer");
             options.AddArgument("no-sandbox");
 
-            options.AddArgument("headless");
+            // options.AddArgument("headless");
 
             var chromeDriverService = ChromeDriverService.CreateDefaultService();
             chromeDriverService.HideCommandPromptWindow = true;
@@ -58,6 +59,8 @@ namespace SaveTheWorldRewards
                 Console.WriteLine(e);
                 return string.Empty;
             }
+
+            await Task.Delay(2000);
 
             driver.Url = link;
 

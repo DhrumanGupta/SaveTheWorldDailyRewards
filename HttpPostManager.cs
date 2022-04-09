@@ -117,7 +117,14 @@ namespace SaveTheWorldRewards
             JsonElement response = responsetemp.RootElement;
             var notifications = response.GetProperty("notifications")[0];
             day = notifications.GetProperty("daysLoggedIn");
-            reward = Items.items[notifications.GetProperty("daysLoggedIn").ToString()];
+
+            int number = int.Parse(notifications.GetProperty("daysLoggedIn").ToString()) % 336;
+            if (number == 0)
+            {
+                number = 1;
+            }
+            
+            reward = Items.items[number.ToString()];
             items = notifications.GetProperty("items");
         }
 
